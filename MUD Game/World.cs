@@ -14,10 +14,10 @@ namespace MUD_Game
 
         public static void createMap()
         {
-            getCurrentMapLayout(currentRoom);
-
             Console.Clear();
 
+            getCurrentMapLayout(currentRoom);
+            
             for (int i = 0; i < currentMap.Length; i++)
             {
                 for (int n = 0; n < currentMap[i].Length; n++)

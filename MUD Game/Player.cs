@@ -21,6 +21,7 @@ namespace MUD_Game
 
         public static void move(char direction)
         {
+            World.createMap();
             if (World.walkable(playerCoords, direction) == true)
             {
                 //If the direction is walkable, then first remove the player from the old place
