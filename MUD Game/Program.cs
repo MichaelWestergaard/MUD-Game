@@ -45,7 +45,7 @@ namespace MUD_Game
             }
         }
 
-        private static void start()
+        static void start()
         {
             message = "Hello! What is your name?";
             Console.WriteLine(message);
@@ -60,23 +60,22 @@ namespace MUD_Game
             gameState = gameStates.running;
         }
 
-        private static void running()
+        static void running()
         {
-            //Show map
             World.createMap();
             Console.WriteLine("Player Coord: " + Player.playerCoords[0] + "," + Player.playerCoords[1]);
+            World.getCurrentMapLayout(World.currentRoom);
             Player.move(Console.ReadKey().KeyChar);
             World.createMap();
-            //move
-            //etc
+            Console.Clear();
         }
 
-        private static void fight()
+        static void fight()
         {
             //Fight scene
         }
 
-        private static void gameOver()
+        static void gameOver()
         {
             message = "Game Over!";
             Console.WriteLine(message);
