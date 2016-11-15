@@ -57,6 +57,8 @@ namespace MUD_Game
             Console.WriteLine(message);
             Console.ReadLine();
             message = "";
+            World.createMapList();
+            World.createMap();
             gameState = gameStates.running;
         }
 
@@ -64,6 +66,7 @@ namespace MUD_Game
         {
             World.createMap();
             Console.WriteLine("Player Coord: " + Player.playerCoords[0] + "," + Player.playerCoords[1]);
+            Console.WriteLine("Map Coord: " + World.mapCoord[0] + "," + World.mapCoord[1]);
             World.getCurrentMapLayout(World.currentRoom);
             Player.move(Console.ReadKey().KeyChar);
             World.createMap();

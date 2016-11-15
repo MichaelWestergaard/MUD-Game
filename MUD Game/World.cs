@@ -14,6 +14,27 @@ namespace MUD_Game
         
         public static int[] mapCoord = new int[2] { 0, 0 };
 
+        public static List<Tuple<string, int, int>> mapList = new List<Tuple<string, int, int>>();
+        public static List<Tuple<string, char, int, int>> mapCoordList = new List<Tuple<string, char, int, int>>();
+
+        public static void createMapList()
+        {
+            //Add map to map list. ("name of map/room", x-coord, y-coord)
+            mapList.Add(new Tuple<string, int, int>("home", 0, 0));
+            mapList.Add(new Tuple<string, int, int>("frontyard", 0, -1));
+
+            //Add spawning point to the rooms
+
+            //home
+            mapCoordList.Add(new Tuple<string, char, int, int>("home", 'w', 5, 6));
+
+            //frontyard
+            mapCoordList.Add(new Tuple<string, char, int, int>("frontyard", 'w', 5, 5));
+            mapCoordList.Add(new Tuple<string, char, int, int>("frontyard", 's', 5, 0));
+            mapCoordList.Add(new Tuple<string, char, int, int>("frontyard", 'a', 10, 3));
+            mapCoordList.Add(new Tuple<string, char, int, int>("frontyard", 'd', 0, 3));
+        }
+
         public static void createMap()
         {
             Console.Clear();
@@ -56,6 +77,7 @@ namespace MUD_Game
                     else if (cell == "_")
                     {
                         changeRoom(direction);
+                        return true;
                     }
                     break;
 
@@ -68,6 +90,7 @@ namespace MUD_Game
                     else if (cell == "_")
                     {
                         changeRoom(direction);
+                        return true;
                     }
                     break;
 
@@ -80,6 +103,7 @@ namespace MUD_Game
                     else if (cell == "|")
                     {
                         changeRoom(direction);
+                        return true;
                     }
                     break;
 
@@ -92,11 +116,8 @@ namespace MUD_Game
                     else if (cell == "|")
                     {
                         changeRoom(direction);
+                        return true;
                     }
-                    break;
-
-                default:
-                    return false;
                     break;
 
             }
@@ -110,25 +131,50 @@ namespace MUD_Game
             {
 
                 case 'w':
-                    mapCoord[0]--;
-                    //Ændre currentRoom
+                    mapCoord[1]++;
                     break;
 
                 case 's':
-                    mapCoord[0]++;
-                    break;
-
-                case 'a':
                     mapCoord[1]--;
                     break;
 
+                case 'a':
+                    mapCoord[0]--;
+                    break;
+
                 case 'd':
-                    mapCoord[1]++;
+                    mapCoord[0]++;
                     break;
 
                 default:
                     break;
 
+            }
+            setNewRoom(direction, mapCoord);
+            getCurrentMapLayout(currentRoom);
+        }
+
+        public static void setNewRoom(char direction, int[] mapCoord)
+        {
+            //Find the new map in the map list
+            foreach(var item in mapList)
+            {
+                //If x- & y-coord is equals to the new map coords
+                if (item.Item2.Equals(mapCoord[0]) && item.Item3.Equals(mapCoord[1]))
+                {
+                    //Set new currentRoom (Item1 in list) and set the coords for the player in the new room
+                    currentRoom = item.Item1;
+
+                    //Set player coords for new room
+                    foreach (var spawnCoord in mapCoordList)
+                    {
+                        if (spawnCoord.Item1.Equals(currentRoom) && spawnCoord.Item2.Equals(direction))
+                        {
+                            Player.playerCoords[0] = spawnCoord.Item3;
+                            Player.playerCoords[1] = spawnCoord.Item4;
+                        }
+                    }
+                }
             }
         }
 
@@ -147,6 +193,7 @@ namespace MUD_Game
                 string[] r7 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
 
                 currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
+
             }
             else if (currentRoom == "frontyard")
             {
@@ -159,6 +206,7 @@ namespace MUD_Game
                 string[] r7 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
 
                 currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
+                
             }
         }
 

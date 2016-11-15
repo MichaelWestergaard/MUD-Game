@@ -55,7 +55,7 @@ namespace MUD_Game
             }
             else
             {
-                //Unable to walk that direction
+                World.placePlayer(playerCoords);
             }
         }
 
