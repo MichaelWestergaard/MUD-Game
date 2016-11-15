@@ -62,13 +62,12 @@ namespace MUD_Game
 
         static void running()
         {
-            //Show map
             World.createMap();
             Console.WriteLine("Player Coord: " + Player.playerCoords[0] + "," + Player.playerCoords[1]);
+            World.getCurrentMapLayout(World.currentRoom);
             Player.move(Console.ReadKey().KeyChar);
             World.createMap();
-            //move
-            //etc
+            Console.Clear();
         }
 
         static void fight()
