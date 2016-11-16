@@ -17,7 +17,8 @@ namespace MUD_Game
         public static int score = 0;
 
         public static int[] playerCoords = new int[2] { 4, 4 };
-        public static List<int> Inventory = new List<int>();
+        public static List<Item> Inventory = new List<Item>();
+        public static string itemList;
 
         public static void move(char direction)
         {
@@ -52,12 +53,36 @@ namespace MUD_Game
                         break;
                         
                 }
+                char lastDir = direction;
             }
             else
             {
                 World.placePlayer(playerCoords);
             }
-        }
+            
+            switch (direction)
+            {
+                case 'e':
+                    Inventory.Add(new Item("Sword", 10, 10));
+                    break;
 
+                case 'i':
+                    showInventory();
+                    break;
+
+            }
+
+        }
+        
+        public static void showInventory()
+        {
+            itemList = "";
+            foreach (var item in Inventory)
+            {
+                itemList += "Name: " + item.name + " - Durability: " + item.currentDurability + "/" + item.durability + "\n";
+            }
+            Program.message = itemList;
+        }
+        
     }
 }

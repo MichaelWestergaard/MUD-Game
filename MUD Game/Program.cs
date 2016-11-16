@@ -13,6 +13,7 @@ namespace MUD_Game
         public static gameStates gameState = gameStates.start;
 
         private static bool alive = true;
+        private static int state = 0;
         public static string message = "";
 
         static void Main(string[] args)
@@ -58,19 +59,26 @@ namespace MUD_Game
             Console.ReadLine();
             message = "";
             World.createMapList();
-            World.createMap();
             gameState = gameStates.running;
         }
 
         static void running()
         {
-            World.createMap();
-            Console.WriteLine("Player Coord: " + Player.playerCoords[0] + "," + Player.playerCoords[1]);
-            Console.WriteLine("Map Coord: " + World.mapCoord[0] + "," + World.mapCoord[1]);
+            if (state == 1)
+            {
+                //Console.WriteLine("Player Coord: " + Player.playerCoords[0] + "," + Player.playerCoords[1]);
+                //Console.WriteLine("Map Coord: " + World.mapCoord[0] + "," + World.mapCoord[1]);
+                Console.WriteLine("Room: " + World.currentRoom);
+                Console.WriteLine(message);
+                message = "";
+
+            }
+
             World.getCurrentMapLayout(World.currentRoom);
             Player.move(Console.ReadKey().KeyChar);
             World.createMap();
-            Console.Clear();
+            state = 1;
+
         }
 
         static void fight()

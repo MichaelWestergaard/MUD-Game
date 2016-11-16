@@ -21,18 +21,39 @@ namespace MUD_Game
         {
             //Add map to map list. ("name of map/room", x-coord, y-coord)
             mapList.Add(new Tuple<string, int, int>("home", 0, 0));
-            mapList.Add(new Tuple<string, int, int>("frontyard", 0, -1));
+            mapList.Add(new Tuple<string, int, int>("littleShop", 1, 0));
+            mapList.Add(new Tuple<string, int, int>("street", 0, -1));
+            mapList.Add(new Tuple<string, int, int>("streetRight1", 1, -1));
+            mapList.Add(new Tuple<string, int, int>("streetRight2", 2, -1));
+            mapList.Add(new Tuple<string, int, int>("mine", 3, -1));
 
             //Add spawning point to the rooms
 
             //home
             mapCoordList.Add(new Tuple<string, char, int, int>("home", 'w', 5, 6));
+            
+            //shop
+            mapCoordList.Add(new Tuple<string, char, int, int>("littleShop", 'w', 5, 4));
 
             //frontyard
-            mapCoordList.Add(new Tuple<string, char, int, int>("frontyard", 'w', 5, 5));
-            mapCoordList.Add(new Tuple<string, char, int, int>("frontyard", 's', 5, 0));
-            mapCoordList.Add(new Tuple<string, char, int, int>("frontyard", 'a', 10, 3));
-            mapCoordList.Add(new Tuple<string, char, int, int>("frontyard", 'd', 0, 3));
+            mapCoordList.Add(new Tuple<string, char, int, int>("street", 'w', 5, 6));
+            mapCoordList.Add(new Tuple<string, char, int, int>("street", 's', 5, 0));
+            mapCoordList.Add(new Tuple<string, char, int, int>("street", 'a', 10, 3));
+            mapCoordList.Add(new Tuple<string, char, int, int>("street", 'd', 0, 3));
+
+            //streetRight1
+            mapCoordList.Add(new Tuple<string, char, int, int>("streetRight1", 'w', 5, 6));
+            mapCoordList.Add(new Tuple<string, char, int, int>("streetRight1", 's', 5, 0));
+            mapCoordList.Add(new Tuple<string, char, int, int>("streetRight1", 'a', 10, 3));
+            mapCoordList.Add(new Tuple<string, char, int, int>("streetRight1", 'd', 0, 3));
+            
+            //streetRight1
+            mapCoordList.Add(new Tuple<string, char, int, int>("streetRight2", 'a', 10, 3));
+            mapCoordList.Add(new Tuple<string, char, int, int>("streetRight2", 'd', 0, 3));
+            
+            //mine
+            mapCoordList.Add(new Tuple<string, char, int, int>("mine", 'd', 0, 3));
+
         }
 
         public static void createMap()
@@ -195,7 +216,18 @@ namespace MUD_Game
                 currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
 
             }
-            else if (currentRoom == "frontyard")
+            else if (currentRoom == "littleShop")
+            {
+                string[] r1 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
+                string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r4 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r5 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
+
+                currentMap = new string[][] { r1, r2, r3, r4, r5 };
+
+            }
+            else if (currentRoom == "street")
             {
                 string[] r1 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
                 string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
@@ -206,7 +238,46 @@ namespace MUD_Game
                 string[] r7 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
 
                 currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
-                
+
+            }
+            else if (currentRoom == "streetRight1")
+            {
+                string[] r1 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
+                string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r4 = { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" };
+                string[] r5 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r6 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r7 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
+
+                currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
+
+            }
+            else if (currentRoom == "streetRight2")
+            {
+                string[] r1 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
+                string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r4 = { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" };
+                string[] r5 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r6 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r7 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
+
+                currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
+
+            }
+            else if (currentRoom == "mine")
+            {
+                string[] r1 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
+                string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r4 = { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r5 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r6 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r7 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
+
+                currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
+
             }
         }
 
