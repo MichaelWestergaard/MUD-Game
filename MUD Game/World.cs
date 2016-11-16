@@ -54,6 +54,10 @@ namespace MUD_Game
             //mine
             mapCoordList.Add(new Tuple<string, char, int, int>("mine", 'd', 0, 3));
 
+            //Add different actions to each room
+            //"Room Name", x-coord, y-coord - -1, -1 = everywhere in the room
+            Action.roomActionList.Add(new Tuple<string, string, int, int>("mine", "mine", -1, -1));
+
         }
 
         public static void createMap()
