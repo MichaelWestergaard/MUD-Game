@@ -13,7 +13,6 @@ namespace MUD_Game
         public static List<Tuple<string, string, int, int>> roomActionList = new List<Tuple<string, string, int, int>>();
         public static List<string> roomActions = new List<string>();
         public static string message;
-        public static bool changed;
 
         public static void actionList()
         {
@@ -42,12 +41,12 @@ namespace MUD_Game
                     //Good outcome
                     int amount = rand.Next(1,6);
 
-                    for(int i = 0; i < Player.Inventory.Count && changed == true; i++)
+                    for(int i = 0; i < Player.Inventory.Count; i++)
                     {
                         if (Player.Inventory[i].name.Equals("Pickaxe"))
                         {
                             Player.Inventory[i].reduceDurability();
-                            changed = true;
+                            break;
                         }
                     }
 
