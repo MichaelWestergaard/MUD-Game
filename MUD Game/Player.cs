@@ -68,26 +68,37 @@ namespace MUD_Game
                     break;
 
                 case 'e':
-                    Action.mine();
+                    Action.interact();
                     break;
 
                 case 'i':
                     showInventory();
                     break;
 
-                case '1':
-                    //invokeStringMethod("Action", "mine");
+                case ' ':
+                    if(World.currentRoom == "mine")
+                    {
+                        Action.mine();
+                    }
+                    else if(World.currentRoom == "litteShop")
+                    {
+                        if (nextToNPC("buyer"))
+                        {
+                            Program.action = "buyItems";
+                            Program.gameState = Program.gameStates.action;
+                        }
+                        else if (nextToNPC("seller"))
+                        {
+                            Program.action = "sellItems";
+                            Program.gameState = Program.gameStates.action;
+                        }
+                    }
+                    else
+                    {
+                        Action.interact();
+                    }
                     break;
-                case '2':
-                    //2nd action from list
-                    break;
-                case '3':
-                    //3rd action from list
-                    break;
-                case '4':
-                    //4th action from list
-                    break;
-
+                
             }
 
         }
@@ -126,6 +137,12 @@ namespace MUD_Game
                     }
                 }
             }
+            return false;
+        }
+        
+        public static bool nextToNPC(string NPC)
+        {
+
             return false;
         }
 

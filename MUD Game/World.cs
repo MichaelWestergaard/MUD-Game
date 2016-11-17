@@ -16,6 +16,8 @@ namespace MUD_Game
 
         public static List<Tuple<string, int, int>> mapList = new List<Tuple<string, int, int>>();
         public static List<Tuple<string, char, int, int>> mapCoordList = new List<Tuple<string, char, int, int>>();
+        
+        public static List<NPC> NPCList = new List<NPC>();
 
         public static void createMapList()
         {
@@ -56,8 +58,12 @@ namespace MUD_Game
 
             //Add different actions to each room
             //"Room Name", x-coord, y-coord - -1, -1 = everywhere in the room
+            Action.roomActionList.Add(new Tuple<string, string, int, int>("home", "talk", -1, -1));
+
             Action.roomActionList.Add(new Tuple<string, string, int, int>("mine", "mine", -1, -1));
 
+            NPCList.Add(new NPC("Merchant", "littleShop", 2, 2));
+            NPCList.Add(new NPC("Merchant", "littleShop", 8, 2));
         }
 
         public static void createMap()
@@ -177,6 +183,7 @@ namespace MUD_Game
             }
             setNewRoom(direction, mapCoord);
             getCurrentMapLayout(currentRoom);
+            Action.actionsNewRoom();
         }
 
         public static void setNewRoom(char direction, int[] mapCoord)

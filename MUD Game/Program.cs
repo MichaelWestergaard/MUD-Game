@@ -9,12 +9,14 @@ namespace MUD_Game
     class Program
     {
 
-        public enum gameStates { start, running, fight, gameOver }
+        public enum gameStates { start, running, action, gameOver }
         public static gameStates gameState = gameStates.start;
 
         private static bool alive = true;
         private static int state = 0;
-        public static string message = "";
+        public static string message;
+        public static string actionList;
+        public static string action;
 
         static void Main(string[] args)
         {
@@ -35,8 +37,8 @@ namespace MUD_Game
                         running();
                         break;
 
-                    case gameStates.fight:
-                        fight();
+                    case gameStates.action:
+                        actionScene(action);
                         break;
 
                     case gameStates.gameOver:
@@ -60,18 +62,22 @@ namespace MUD_Game
             message = "";
             World.createMapList();
             gameState = gameStates.running;
+            Action.actionsNewRoom();
         }
 
         static void running()
         {
             if (state == 1)
             {
-                //Console.WriteLine("Player Coord: " + Player.playerCoords[0] + "," + Player.playerCoords[1]);
+                Console.WriteLine("Player Coord: " + Player.playerCoords[0] + "," + Player.playerCoords[1]);
                 //Console.WriteLine("Map Coord: " + World.mapCoord[0] + "," + World.mapCoord[1]);
                 Console.WriteLine("Room: " + World.currentRoom);
                 Console.WriteLine(message);
                 message = "";
-
+                actionList = "[i]  Inventory  |  [e]  Interact  |  ";
+                Console.SetCursorPosition(0,23);
+                Action.action();
+                Console.WriteLine(actionList);
             }
 
             World.getCurrentMapLayout(World.currentRoom);
@@ -81,11 +87,6 @@ namespace MUD_Game
 
         }
 
-        static void fight()
-        {
-            //Fight scene
-        }
-
         static void gameOver()
         {
             message = "Game Over!";
@@ -93,5 +94,30 @@ namespace MUD_Game
             alive = false;
         }
 
+        public static void actionScene(string action)
+        {
+            if(action == "buyItems")
+            {
+                Console.WriteLine("Køb ting her");
+                Console.ReadLine();
+            }
+            else if (action == "sellItems")
+            {
+                Console.WriteLine("Sælg ting her");
+                Console.ReadLine();
+            }
+            else if (action == "fight")
+            {
+
+            }
+
+            if(Console.ReadKey().KeyChar == 'q') {
+                gameState = gameStates.running;
+            } else
+            {
+                actionScene(action);
+            }
+        }
+        
     }
 }

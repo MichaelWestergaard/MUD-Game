@@ -28,13 +28,23 @@ namespace MUD_Game
             if(currentDurability <= 0)
             {
                 Program.message += "Your item was destroyed.\n";
-                //delete item
+                removeItem();
             }
         }
 
         public void increaseQuantity(int amount)
         {
             quantity += amount;
+        }
+
+        public void decreaseQuantity(int amount)
+        {
+            quantity -= amount;
+        }
+
+        public void removeItem()
+        {
+            Player.Inventory.Remove(this);
         }
 
     }
