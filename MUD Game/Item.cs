@@ -28,6 +28,7 @@ namespace MUD_Game
             if(currentDurability <= 0)
             {
                 Program.message += "Your item was destroyed.\n";
+                //delete item
             }
         }
 

@@ -74,7 +74,7 @@ namespace MUD_Game
                 case 'i':
                     showInventory();
                     break;
-                /*
+
                 case '1':
                     //invokeStringMethod("Action", "mine");
                     break;
@@ -87,7 +87,6 @@ namespace MUD_Game
                 case '4':
                     //4th action from list
                     break;
-                    */
 
             }
 
@@ -121,7 +120,7 @@ namespace MUD_Game
             {
                 if (item.name.Equals(itemName))
                 {
-                    if(item.currentDurability >= item.durability)
+                    if(item.currentDurability >= 0)
                     {
                         return true;
                     }
@@ -129,16 +128,6 @@ namespace MUD_Game
             }
             return false;
         }
-        /*
-        public static void invokeStringMethod(string typeName, string methodName)
-        {
-            MethodInfo method = Type.GetType(typeName).GetMethod(methodName);
-
-            Action c = new Action();
-            string result = (string)method.Invoke(c, null);
-            Console.WriteLine(result);
-        }
-        */
 
     }
 }
