@@ -64,11 +64,12 @@ namespace MUD_Game
             switch (key)
             {
                 case 'c':
-                    Inventory.Add(new Item("Pickaxe", 1, 10, 10));
+                    Inventory.Add(new Item("Pickaxe", 1, 10, 10, 10, 5));
                     break;
 
                 case 'e':
-                    Action.interact();
+                    //Program.action = "interact";
+                    //Program.gameState = Program.gameStates.action;
                     break;
 
                 case 'i':
@@ -79,6 +80,14 @@ namespace MUD_Game
                     if(World.currentRoom == "mine")
                     {
                         Action.mine();
+                    }
+                    else if(World.currentRoom == "forest")
+                    {
+                        Action.cut();
+                    }
+                    else if (World.currentRoom == "desert")
+                    {
+                        Action.dig(); 
                     }
                     else if(World.currentRoom == "littleShop")
                     {
@@ -95,7 +104,15 @@ namespace MUD_Game
                     }
                     else
                     {
-                        Action.interact();
+                        if (nextToAnyNPC())
+                        {
+                            Program.action = "interact";
+                            Program.gameState = Program.gameStates.action;
+                        }
+                        else
+                        {
+                            Program.message += "Nothing to do here..\n";
+                        }
                     }
                     break;
                 
@@ -152,6 +169,18 @@ namespace MUD_Game
                         return true;
                     }
                     break;
+                }
+            }
+            return false;
+        }
+
+        public static bool nextToAnyNPC()
+        {
+            foreach (var npc in World.NPCList)
+            {
+                if (npc.xCoord - 1 == playerCoords[0] || npc.xCoord + 1 == playerCoords[0] || npc.yCoord - 1 == playerCoords[1] || npc.yCoord + 1 == playerCoords[1])
+                {
+                    return true;
                 }
             }
             return false;

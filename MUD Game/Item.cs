@@ -13,13 +13,17 @@ namespace MUD_Game
         public int quantity { get; set; }
         public int currentDurability { get; set; }
         public int durability { get; set; }
+        public int buyPrice { get; set; }
+        public int sellPrice { get; set; }
 
-        public Item(string name, int quantity, int currentDurability, int durability)
+        public Item(string name, int quantity, int currentDurability, int durability, int buyPrice, int sellPrice)
         {
             this.name = name;
             this.quantity = quantity;
             this.durability = durability;
             this.currentDurability = currentDurability;
+            this.buyPrice = buyPrice;
+            this.sellPrice = sellPrice;
         }
 
         public void reduceDurability()
@@ -45,6 +49,16 @@ namespace MUD_Game
         public void removeItem()
         {
             Player.Inventory.Remove(this);
+        }
+
+        public bool sellItem()
+        {
+            if (Player.Inventory.Remove(this))
+            {
+                return true;
+            }
+            return false;
+
         }
 
     }

@@ -18,7 +18,7 @@ namespace MUD_Game
         public static List<Tuple<string, char, int, int>> mapCoordList = new List<Tuple<string, char, int, int>>();
         
         public static List<NPC> NPCList = new List<NPC>();
-
+        
         public static void createMapList()
         {
             //Add map to map list. ("name of map/room", x-coord, y-coord)
@@ -27,6 +27,8 @@ namespace MUD_Game
             mapList.Add(new Tuple<string, int, int>("street", 0, -1));
             mapList.Add(new Tuple<string, int, int>("streetRight1", 1, -1));
             mapList.Add(new Tuple<string, int, int>("streetRight2", 2, -1));
+            mapList.Add(new Tuple<string, int, int>("forest", 2, 0));
+            mapList.Add(new Tuple<string, int, int>("desert", 2, -2));
             mapList.Add(new Tuple<string, int, int>("mine", 3, -1));
 
             //Add spawning point to the rooms
@@ -48,22 +50,41 @@ namespace MUD_Game
             mapCoordList.Add(new Tuple<string, char, int, int>("streetRight1", 's', 5, 0));
             mapCoordList.Add(new Tuple<string, char, int, int>("streetRight1", 'a', 10, 3));
             mapCoordList.Add(new Tuple<string, char, int, int>("streetRight1", 'd', 0, 3));
-            
+
             //streetRight1
+            mapCoordList.Add(new Tuple<string, char, int, int>("streetRight2", 'w', 5, 6));
+            mapCoordList.Add(new Tuple<string, char, int, int>("streetRight2", 's', 5, 0));
             mapCoordList.Add(new Tuple<string, char, int, int>("streetRight2", 'a', 10, 3));
             mapCoordList.Add(new Tuple<string, char, int, int>("streetRight2", 'd', 0, 3));
             
             //mine
             mapCoordList.Add(new Tuple<string, char, int, int>("mine", 'd', 0, 3));
 
+            //forest
+            mapCoordList.Add(new Tuple<string, char, int, int>("forest", 'w', 5, 6));
+
+            //desert
+            mapCoordList.Add(new Tuple<string, char, int, int>("desert", 's', 5, 0));
+
             //Add different actions to each room
             //"Room Name", x-coord, y-coord - -1, -1 = everywhere in the room
             Action.roomActionList.Add(new Tuple<string, string, int, int>("home", "talk", -1, -1));
 
-            Action.roomActionList.Add(new Tuple<string, string, int, int>("mine", "mine", -1, -1));
+            Action.roomActionList.Add(new Tuple<string, string, int, int>("mine", "Mine ores", -1, -1));
+            Action.roomActionList.Add(new Tuple<string, string, int, int>("forest", "Cut trees", -1, -1));
+            Action.roomActionList.Add(new Tuple<string, string, int, int>("desert", "Dig out sand", -1, -1));
 
+            //Add NPCs
             NPCList.Add(new NPC("Buyer", "M", "littleShop", 2, 2));
             NPCList.Add(new NPC("Seller", "M", "littleShop", 8, 2));
+            NPCList.Add(new NPC("Pleb", "P", "street", 4, 4));
+
+
+            //Add items to shop
+            Program.itemsInShop.Add(new Item("Pickaxe", 1, 10, 10, 10, 5));
+            Program.itemsInShop.Add(new Item("Axe", 1, 10, 10, 10, 5));
+            Program.itemsInShop.Add(new Item("Shovel", 1, 10, 10, 10, 5));
+            Program.itemsInShop.Add(new Item("Sword", 1, 10, 10, 20, 7));
         }
 
         public static void createMap()
@@ -266,13 +287,13 @@ namespace MUD_Game
             }
             else if (currentRoom == "streetRight2")
             {
-                string[] r1 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
+                string[] r1 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
                 string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r4 = { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" };
                 string[] r5 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r6 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
-                string[] r7 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
+                string[] r7 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
 
                 currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
 
@@ -283,6 +304,32 @@ namespace MUD_Game
                 string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r4 = { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r5 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r6 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r7 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
+
+                currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
+
+            }
+            else if (currentRoom == "forest")
+            {
+                string[] r1 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
+                string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r4 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r5 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r6 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r7 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
+
+                currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
+
+            }
+            else if (currentRoom == "desert")
+            {
+                string[] r1 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
+                string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r4 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r5 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r6 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r7 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
