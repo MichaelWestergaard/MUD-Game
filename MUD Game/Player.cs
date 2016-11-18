@@ -80,14 +80,14 @@ namespace MUD_Game
                     {
                         Action.mine();
                     }
-                    else if(World.currentRoom == "litteShop")
+                    else if(World.currentRoom == "littleShop")
                     {
-                        if (nextToNPC("buyer"))
+                        if (nextToNPC("Buyer"))
                         {
                             Program.action = "buyItems";
                             Program.gameState = Program.gameStates.action;
                         }
-                        else if (nextToNPC("seller"))
+                        else if (nextToNPC("Seller"))
                         {
                             Program.action = "sellItems";
                             Program.gameState = Program.gameStates.action;
@@ -142,7 +142,18 @@ namespace MUD_Game
         
         public static bool nextToNPC(string NPC)
         {
-
+            
+            foreach (var npc in World.NPCList)
+            {
+                if (npc.name == NPC)
+                {
+                    if (npc.xCoord - 1 == playerCoords[0] || npc.xCoord + 1 == playerCoords[0] || npc.yCoord - 1 == playerCoords[1] || npc.yCoord + 1 == playerCoords[1])
+                    {
+                        return true;
+                    }
+                    break;
+                }
+            }
             return false;
         }
 

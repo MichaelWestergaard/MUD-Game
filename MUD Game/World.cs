@@ -62,8 +62,8 @@ namespace MUD_Game
 
             Action.roomActionList.Add(new Tuple<string, string, int, int>("mine", "mine", -1, -1));
 
-            NPCList.Add(new NPC("Merchant", "littleShop", 2, 2));
-            NPCList.Add(new NPC("Merchant", "littleShop", 8, 2));
+            NPCList.Add(new NPC("Buyer", "M", "littleShop", 2, 2));
+            NPCList.Add(new NPC("Seller", "M", "littleShop", 8, 2));
         }
 
         public static void createMap()
@@ -216,12 +216,12 @@ namespace MUD_Game
         {
             if (currentRoom == "home")
             {
-                string[] r1  = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
-                string[] r2  = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
-                string[] r3  = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
-                string[] r4  = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
-                string[] r5  = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
-                string[] r6  = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r1 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
+                string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r4 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r5 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r6 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r7 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
 
                 currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
@@ -289,6 +289,15 @@ namespace MUD_Game
 
                 currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
 
+            }
+
+            //Place the NPCs in the current room
+            foreach (var npc in NPCList)
+            {
+                if (npc.room == currentRoom)
+                {
+                    currentMap[npc.yCoord][npc.xCoord] = npc.icon;
+                }
             }
         }
 

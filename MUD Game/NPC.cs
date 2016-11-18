@@ -10,13 +10,15 @@ namespace MUD_Game
     {
 
         public string name { get; set; }
+        public string icon { get; set; }
         public string room { get; set; }
         public int xCoord { get; set; }
         public int yCoord { get; set; }
 
-        public NPC(string name, string room, int xCoord, int yCoord)
+        public NPC(string name, string icon, string room, int xCoord, int yCoord)
         {
             this.name = name;
+            this.icon = icon;
             this.room = room;
             this.xCoord = xCoord;
             this.yCoord = yCoord;

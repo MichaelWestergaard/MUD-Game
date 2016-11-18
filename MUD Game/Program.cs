@@ -96,26 +96,134 @@ namespace MUD_Game
 
         public static void actionScene(string action)
         {
-            if(action == "buyItems")
+            char key = Console.ReadKey().KeyChar;
+            if (action == "buyItems")
             {
                 Console.WriteLine("Køb ting her");
-                Console.ReadLine();
+                actions(Console.ReadKey().KeyChar, action);
             }
             else if (action == "sellItems")
             {
                 Console.WriteLine("Sælg ting her");
-                Console.ReadLine();
+                actions(Console.ReadKey().KeyChar, action);
             }
             else if (action == "fight")
             {
 
             }
 
-            if(Console.ReadKey().KeyChar == 'q') {
-                gameState = gameStates.running;
-            } else
+        }
+
+        public static void actions(char key, string action)
+        {
+            switch (key)
             {
-                actionScene(action);
+                case '1':
+                    if(action == "buyItems")
+                    {
+                        //But item 1
+                    }
+                    else if (action == "sellItems")
+                    {
+                        //Sell item 1
+                    }
+                    break;
+
+                case '2':
+                    if (action == "buyItems")
+                    {
+                        //But item 2
+                    }
+                    else if (action == "sellItems")
+                    {
+                        //Sell item 2
+                    }
+                    break;
+
+                case '3':
+                    if (action == "buyItems")
+                    {
+                        //But item 3
+                    }
+                    else if (action == "sellItems")
+                    {
+                        //Sell item 3
+                    }
+                    break;
+
+                case '4':
+                    if (action == "buyItems")
+                    {
+                        //But item 4
+                    }
+                    else if (action == "sellItems")
+                    {
+                        //Sell item 4
+                    }
+                    break;
+
+                case '5':
+                    if (action == "buyItems")
+                    {
+                        //But item 5
+                    }
+                    else if (action == "sellItems")
+                    {
+                        //Sell item 5
+                    }
+                    break;
+
+                case '6':
+                    if (action == "buyItems")
+                    {
+                        //But item 6
+                    }
+                    else if (action == "sellItems")
+                    {
+                        //Sell item 6
+                    }
+                    break;
+
+                case '7':
+                    if (action == "buyItems")
+                    {
+                        //But item 7
+                    }
+                    else if (action == "sellItems")
+                    {
+                        //Sell item 7
+                    }
+                    break;
+
+                case '8':
+                    if (action == "buyItems")
+                    {
+                        //But item 8
+                    }
+                    else if (action == "sellItems")
+                    {
+                        //Sell item 8
+                    }
+                    break;
+
+                case '9':
+                    if (action == "buyItems")
+                    {
+                        //But item 9
+                    }
+                    else if (action == "sellItems")
+                    {
+                        //Sell item 9
+                    }
+                    break;
+
+                case 'q':
+                    Console.Clear();
+                    gameState = gameStates.running;
+                    World.getCurrentMapLayout(World.currentRoom);
+                    World.createMap();
+                    break;
+
             }
         }
         
