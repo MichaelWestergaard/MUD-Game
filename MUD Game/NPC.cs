@@ -24,5 +24,10 @@ namespace MUD_Game
             this.yCoord = yCoord;
         }
 
+        public void remove()
+        {
+            World.NPCList.Remove(this);
+        }
+
     }
 }

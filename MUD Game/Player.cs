@@ -20,7 +20,7 @@ namespace MUD_Game
         public static int[] playerCoords = new int[2] { 4, 4 };
         public static List<Item> Inventory = new List<Item>();
         public static string itemList;
-
+        
         public static void move(char key)
         {
             if (World.walkable(playerCoords, key) == true)
@@ -64,12 +64,15 @@ namespace MUD_Game
             switch (key)
             {
                 case 'c':
-                    Inventory.Add(new Item("Pickaxe", 1, 10, 10, 10, 5));
+                    cash += 50;
                     break;
 
                 case 'e':
                     //Program.action = "interact";
                     //Program.gameState = Program.gameStates.action;
+                    break;
+                case 'h':
+                    Action.heal();
                     break;
 
                 case 'i':
@@ -164,7 +167,7 @@ namespace MUD_Game
             {
                 if (npc.name == NPC)
                 {
-                    if (npc.xCoord - 1 == playerCoords[0] || npc.xCoord + 1 == playerCoords[0] || npc.yCoord - 1 == playerCoords[1] || npc.yCoord + 1 == playerCoords[1])
+                    if (npc.xCoord - 1 == playerCoords[0] && npc.yCoord == playerCoords[1] || npc.xCoord + 1 == playerCoords[0] && npc.yCoord == playerCoords[1] || npc.yCoord - 1 == playerCoords[1] && npc.xCoord == playerCoords[0] || npc.yCoord + 1 == playerCoords[1] && npc.xCoord == playerCoords[0])
                     {
                         return true;
                     }
@@ -178,9 +181,13 @@ namespace MUD_Game
         {
             foreach (var npc in World.NPCList)
             {
-                if (npc.xCoord - 1 == playerCoords[0] || npc.xCoord + 1 == playerCoords[0] || npc.yCoord - 1 == playerCoords[1] || npc.yCoord + 1 == playerCoords[1])
+                if (npc.room == World.currentRoom)
                 {
-                    return true;
+                    if (npc.xCoord - 1 == playerCoords[0] && npc.yCoord == playerCoords[1] || npc.xCoord + 1 == playerCoords[0] && npc.yCoord == playerCoords[1] || npc.yCoord - 1 == playerCoords[1] && npc.xCoord == playerCoords[0] || npc.yCoord + 1 == playerCoords[1] && npc.xCoord == playerCoords[0])
+                    {
+                        return true;
+                        break;
+                    }
                 }
             }
             return false;

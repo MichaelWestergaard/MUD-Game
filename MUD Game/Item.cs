@@ -15,8 +15,9 @@ namespace MUD_Game
         public int durability { get; set; }
         public int buyPrice { get; set; }
         public int sellPrice { get; set; }
+        public bool stackable { get; set; }
 
-        public Item(string name, int quantity, int currentDurability, int durability, int buyPrice, int sellPrice)
+        public Item(string name, int quantity, int currentDurability, int durability, int buyPrice, int sellPrice, bool stackable)
         {
             this.name = name;
             this.quantity = quantity;
@@ -24,6 +25,7 @@ namespace MUD_Game
             this.currentDurability = currentDurability;
             this.buyPrice = buyPrice;
             this.sellPrice = sellPrice;
+            this.stackable = stackable;
         }
 
         public void reduceDurability()

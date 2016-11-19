@@ -18,6 +18,7 @@ namespace MUD_Game
         public static string actionList;
         public static string action;
         public static string actionMessage;
+        public static string actionResponse;
         public static string title;
 
         public static List<Item> itemsInShop = new List<Item>();
@@ -82,7 +83,7 @@ namespace MUD_Game
                 Console.WriteLine("Room: " + World.currentRoom);
                 Console.WriteLine(message);
                 message = "";
-                actionList = "[i]  Inventory  |  [e]  Interact  |  ";
+                actionList = "[i]  Inventory  |  [e]  Interact  |  [h]  Heal  |  ";
                 Console.SetCursorPosition(0,23);
                 Action.action();
                 Console.WriteLine(actionList);
@@ -144,7 +145,20 @@ namespace MUD_Game
                 {
                     actionMessage = "[1] Talk\n[2] Steal Money\n[3] Attack";
 
+
                     Console.WriteLine(actionMessage);
+                    Console.WriteLine(actionResponse);
+                    actionResponse = "";
+
+                    actions(Console.ReadKey().KeyChar, action);
+                }
+                else if(Player.nextToNPC("Blocker"))
+                {
+                    actionMessage = "[1] Talk\n[2] Steal Money\n[3] Give $200 to Unblock Door";
+
+                    Console.WriteLine(actionMessage);
+                    Console.WriteLine(actionResponse);
+                    actionResponse = "";
 
                     actions(Console.ReadKey().KeyChar, action);
                 }
@@ -164,7 +178,22 @@ namespace MUD_Game
                         if(Player.cash >= itemsInShop[n].buyPrice)
                         {
                             Player.cash -= itemsInShop[n].buyPrice;
-                            Player.Inventory.Add(new Item (itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice));
+                            if (Player.hasItem(itemsInShop[n].name) && itemsInShop[n].stackable == true)
+                            {
+                                foreach (var item in Player.Inventory)
+                                {
+                                    if (item.name.Equals(itemsInShop[n].name))
+                                    {
+                                        item.increaseQuantity(itemsInShop[n].quantity);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+
+                                Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice, itemsInShop[n].stackable));
+                            }
                         }
                     }
                     else if (action == "sellItems")
@@ -179,7 +208,14 @@ namespace MUD_Game
                     }
                     else if (action == "interact")
                     {
-                        //Talk to npc
+                        if (Player.nextToNPC("Pleb"))
+                        {
+                            Program.actionResponse += "You need to find a way to earn some money..\n";
+                        }
+                        else if (Player.nextToNPC("Blocker"))
+                        {
+                            Program.actionResponse += "If you give me $200, I'll let you in!\n";
+                        }
                     }
                     break;
 
@@ -191,7 +227,22 @@ namespace MUD_Game
                         if (Player.cash >= itemsInShop[n].buyPrice)
                         {
                             Player.cash -= itemsInShop[n].buyPrice;
-                            Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice));
+                            if (Player.hasItem(itemsInShop[n].name) && itemsInShop[n].stackable == true)
+                            {
+                                foreach (var item in Player.Inventory)
+                                {
+                                    if (item.name.Equals(itemsInShop[n].name))
+                                    {
+                                        item.increaseQuantity(itemsInShop[n].quantity);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+
+                                Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice, itemsInShop[n].stackable));
+                            }
                         }
                     }
                     else if (action == "sellItems")
@@ -207,10 +258,6 @@ namespace MUD_Game
                     {
                         //Steal money from the NPC
                         Action.stealMoney();
-                        Console.Clear();
-                        gameState = gameStates.running;
-                        World.getCurrentMapLayout(World.currentRoom);
-                        World.createMap();
                     }
                     break;
 
@@ -222,7 +269,22 @@ namespace MUD_Game
                         if (Player.cash >= itemsInShop[n].buyPrice)
                         {
                             Player.cash -= itemsInShop[n].buyPrice;
-                            Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice));
+                            if (Player.hasItem(itemsInShop[n].name) && itemsInShop[n].stackable == true)
+                            {
+                                foreach (var item in Player.Inventory)
+                                {
+                                    if (item.name.Equals(itemsInShop[n].name))
+                                    {
+                                        item.increaseQuantity(itemsInShop[n].quantity);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+
+                                Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice, itemsInShop[n].stackable));
+                            }
                         }
                     }
                     else if (action == "sellItems")
@@ -232,6 +294,37 @@ namespace MUD_Game
                         if (Player.Inventory[2].sellItem())
                         {
                             Player.cash += cashToAdd;
+                        }
+                    }
+                    else if (action == "interact")
+                    {
+                        if (Player.nextToNPC("Pleb"))
+                        {
+                            //Attack
+                        }
+                        else if (Player.nextToNPC("Blocker"))
+                        {
+                            if (Player.cash >= 200)
+                            {
+                                Player.cash -= 200;
+                                foreach (var npc in World.NPCList)
+                                {
+                                    if (npc.name.Equals("Blocker"))
+                                    {
+                                        npc.remove();
+                                        break;
+                                    }
+                                }
+
+                                Console.Clear();
+                                gameState = gameStates.running;
+                                World.getCurrentMapLayout(World.currentRoom);
+                                World.createMap();
+                            }
+                            else
+                            {
+                                Program.actionResponse += "You do not have enough money!\n";
+                            }
                         }
                     }
                     break;
@@ -244,7 +337,22 @@ namespace MUD_Game
                         if (Player.cash >= itemsInShop[n].buyPrice)
                         {
                             Player.cash -= itemsInShop[n].buyPrice;
-                            Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice));
+                            if (Player.hasItem(itemsInShop[n].name) && itemsInShop[n].stackable == true)
+                            {
+                                foreach (var item in Player.Inventory)
+                                {
+                                    if (item.name.Equals(itemsInShop[n].name))
+                                    {
+                                        item.increaseQuantity(itemsInShop[n].quantity);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+
+                                Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice, itemsInShop[n].stackable));
+                            }
                         }
                     }
                     else if (action == "sellItems")
@@ -266,7 +374,22 @@ namespace MUD_Game
                         if (Player.cash >= itemsInShop[n].buyPrice)
                         {
                             Player.cash -= itemsInShop[n].buyPrice;
-                            Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice));
+                            if (Player.hasItem(itemsInShop[n].name) && itemsInShop[n].stackable == true)
+                            {
+                                foreach (var item in Player.Inventory)
+                                {
+                                    if (item.name.Equals(itemsInShop[n].name))
+                                    {
+                                        item.increaseQuantity(itemsInShop[n].quantity);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+
+                                Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice, itemsInShop[n].stackable));
+                            }
                         }
                     }
                     else if (action == "sellItems")
@@ -288,7 +411,22 @@ namespace MUD_Game
                         if (Player.cash >= itemsInShop[n].buyPrice)
                         {
                             Player.cash -= itemsInShop[n].buyPrice;
-                            Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice));
+                            if (Player.hasItem(itemsInShop[n].name) && itemsInShop[n].stackable == true)
+                            {
+                                foreach (var item in Player.Inventory)
+                                {
+                                    if (item.name.Equals(itemsInShop[n].name))
+                                    {
+                                        item.increaseQuantity(itemsInShop[n].quantity);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+
+                                Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice, itemsInShop[n].stackable));
+                            }
                         }
                     }
                     else if (action == "sellItems")
@@ -310,7 +448,22 @@ namespace MUD_Game
                         if (Player.cash >= itemsInShop[n].buyPrice)
                         {
                             Player.cash -= itemsInShop[n].buyPrice;
-                            Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice));
+                            if (Player.hasItem(itemsInShop[n].name) && itemsInShop[n].stackable == true)
+                            {
+                                foreach (var item in Player.Inventory)
+                                {
+                                    if (item.name.Equals(itemsInShop[n].name))
+                                    {
+                                        item.increaseQuantity(itemsInShop[n].quantity);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+
+                                Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice, itemsInShop[n].stackable));
+                            }
                         }
                     }
                     else if (action == "sellItems")
@@ -332,7 +485,22 @@ namespace MUD_Game
                         if (Player.cash >= itemsInShop[n].buyPrice)
                         {
                             Player.cash -= itemsInShop[n].buyPrice;
-                            Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice));
+                            if (Player.hasItem(itemsInShop[n].name) && itemsInShop[n].stackable == true)
+                            {
+                                foreach (var item in Player.Inventory)
+                                {
+                                    if (item.name.Equals(itemsInShop[n].name))
+                                    {
+                                        item.increaseQuantity(itemsInShop[n].quantity);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+
+                                Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice, itemsInShop[n].stackable));
+                            }
                         }
                     }
                     else if (action == "sellItems")
@@ -354,7 +522,22 @@ namespace MUD_Game
                         if (Player.cash >= itemsInShop[n].buyPrice)
                         {
                             Player.cash -= itemsInShop[n].buyPrice;
-                            Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice));
+                            if (Player.hasItem(itemsInShop[n].name) && itemsInShop[n].stackable == true)
+                            {
+                                foreach (var item in Player.Inventory)
+                                {
+                                    if (item.name.Equals(itemsInShop[n].name))
+                                    {
+                                        item.increaseQuantity(itemsInShop[n].quantity);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+
+                                Player.Inventory.Add(new Item(itemsInShop[n].name, itemsInShop[n].quantity, itemsInShop[n].durability, itemsInShop[n].durability, itemsInShop[n].buyPrice, itemsInShop[n].sellPrice, itemsInShop[n].stackable));
+                            }
                         }
                     }
                     else if (action == "sellItems")

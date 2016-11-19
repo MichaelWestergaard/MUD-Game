@@ -72,7 +72,7 @@ namespace MUD_Game
                     else
                     {
                         //Else add a new item to the inventory
-                        Player.Inventory.Add(new Item("Ore", amount, 0, 0, 0, 1));
+                        Player.Inventory.Add(new Item("Ore", amount, 0, 0, 0, 1, true));
                     }
 
                 } else
@@ -154,7 +154,7 @@ namespace MUD_Game
                     else
                     {
                         //Else add a new item to the inventory
-                        Player.Inventory.Add(new Item("Sand", amount, 0, 0, 0, 1));
+                        Player.Inventory.Add(new Item("Sand", amount, 0, 0, 0, 1, true));
                     }
 
                 }
@@ -238,7 +238,7 @@ namespace MUD_Game
                     else
                     {
                         //Else add a new item to the inventory
-                        Player.Inventory.Add(new Item("Wood", amount, 0, 0, 0, 1));
+                        Player.Inventory.Add(new Item("Wood", amount, 0, 0, 0, 1, true));
                     }
 
                 }
@@ -291,7 +291,45 @@ namespace MUD_Game
                 Program.message = "You need a axe in order to cut trees here!\n";
             }
         }
-
+        
+        public static void heal()
+        {
+            if (Player.hasItem("Health Potion"))
+            {
+                //Find the health potion in the inventory
+                foreach (var item in Player.Inventory)
+                {
+                    if (item.name.Equals("Health Potion"))
+                    {
+                        if (item.quantity <= 1)
+                        {
+                            //Remove the item, because there is no potions left
+                            item.removeItem();
+                        }
+                        else
+                        {
+                            item.decreaseQuantity(1);
+                        }
+                        break;
+                    }
+                }
+                
+                if(Player.currentHP + 25 > Player.maxHP)
+                {
+                    Player.currentHP = Player.maxHP;
+                }
+                else
+                {
+                    Player.currentHP += 25;
+                }
+                 
+                Program.message += "You used a Health Potion and restored 25 HP!\n";
+            }
+            else
+            {
+                Program.message += "You do not have any Health Potions!\n";
+            }
+        }
 
         public static void stealMoney()
         {
@@ -300,6 +338,16 @@ namespace MUD_Game
             if (Player.hasItem("Sword"))
             {
                 outcome = rand.Next(1, 5);
+
+                for (int i = 0; i < Player.Inventory.Count; i++)
+                {
+                    if (Player.Inventory[i].name.Equals("Sword"))
+                    {
+                        Player.Inventory[i].reduceDurability();
+                        break;
+                    }
+                }
+
             } else
             {
                 outcome = rand.Next(1, 3);
@@ -311,7 +359,7 @@ namespace MUD_Game
                 int damageTaken = rand.Next(5, 10);
                 Player.currentHP -= damageTaken;
 
-                Program.message += "You failed to steal money and lost " + damageTaken + " HP";
+                Program.actionResponse += "You failed to steal money and lost " + damageTaken + " HP";
 
             }
             else
@@ -319,7 +367,7 @@ namespace MUD_Game
                 int money = rand.Next(1, 5);
                 Player.cash += money;
 
-                Program.message += "You stole $" + money + "!";
+                Program.actionResponse += "You stole $" + money + "!";
             }
         }
     }

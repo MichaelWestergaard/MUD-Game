@@ -68,8 +68,6 @@ namespace MUD_Game
 
             //Add different actions to each room
             //"Room Name", x-coord, y-coord - -1, -1 = everywhere in the room
-            Action.roomActionList.Add(new Tuple<string, string, int, int>("home", "talk", -1, -1));
-
             Action.roomActionList.Add(new Tuple<string, string, int, int>("mine", "Mine ores", -1, -1));
             Action.roomActionList.Add(new Tuple<string, string, int, int>("forest", "Cut trees", -1, -1));
             Action.roomActionList.Add(new Tuple<string, string, int, int>("desert", "Dig out sand", -1, -1));
@@ -77,14 +75,16 @@ namespace MUD_Game
             //Add NPCs
             NPCList.Add(new NPC("Buyer", "M", "littleShop", 2, 2));
             NPCList.Add(new NPC("Seller", "M", "littleShop", 8, 2));
-            NPCList.Add(new NPC("Pleb", "P", "street", 4, 4));
+            NPCList.Add(new NPC("Pleb", "P", "street", 8, 1));
+            NPCList.Add(new NPC("Blocker", "B", "street", 1, 3));
 
 
             //Add items to shop
-            Program.itemsInShop.Add(new Item("Pickaxe", 1, 10, 10, 10, 5));
-            Program.itemsInShop.Add(new Item("Axe", 1, 10, 10, 10, 5));
-            Program.itemsInShop.Add(new Item("Shovel", 1, 10, 10, 10, 5));
-            Program.itemsInShop.Add(new Item("Sword", 1, 10, 10, 20, 7));
+            Program.itemsInShop.Add(new Item("Pickaxe", 1, 10, 10, 10, 5, false));
+            Program.itemsInShop.Add(new Item("Axe", 1, 10, 10, 10, 5, false));
+            Program.itemsInShop.Add(new Item("Shovel", 1, 10, 10, 10, 5, false));
+            Program.itemsInShop.Add(new Item("Sword", 1, 10, 10, 20, 7, false));
+            Program.itemsInShop.Add(new Item("Health Potion", 2, 1, 1, 50, 5, true));
         }
 
         public static void createMap()
