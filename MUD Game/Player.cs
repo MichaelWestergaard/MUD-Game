@@ -186,7 +186,6 @@ namespace MUD_Game
                     if (npc.xCoord - 1 == playerCoords[0] && npc.yCoord == playerCoords[1] || npc.xCoord + 1 == playerCoords[0] && npc.yCoord == playerCoords[1] || npc.yCoord - 1 == playerCoords[1] && npc.xCoord == playerCoords[0] || npc.yCoord + 1 == playerCoords[1] && npc.xCoord == playerCoords[0])
                     {
                         return true;
-                        break;
                     }
                 }
             }

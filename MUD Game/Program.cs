@@ -91,6 +91,7 @@ namespace MUD_Game
 
             World.getCurrentMapLayout(World.currentRoom);
             Player.move(Console.ReadKey().KeyChar);
+            World.moveMonsters(World.currentRoom);
             World.createMap();
             state = 1;
 
