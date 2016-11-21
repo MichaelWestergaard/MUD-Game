@@ -66,11 +66,7 @@ namespace MUD_Game
                 case 'c':
                     cash += 50;
                     break;
-
-                case 'e':
-                    //Program.action = "interact";
-                    //Program.gameState = Program.gameStates.action;
-                    break;
+                    
                 case 'h':
                     Action.heal();
                     break;
@@ -104,6 +100,11 @@ namespace MUD_Game
                             Program.action = "sellItems";
                             Program.gameState = Program.gameStates.action;
                         }
+                    }
+                    else if (nextToMonster())
+                    {
+                        Program.action = "fight";
+                        Program.gameState = Program.gameStates.action;
                     }
                     else
                     {
@@ -190,6 +191,37 @@ namespace MUD_Game
                 }
             }
             return false;
+        }
+
+        public static bool nextToMonster()
+        {
+            foreach (var monster in World.MonsterList)
+            {
+                if (monster.room == World.currentRoom)
+                {
+                    if (monster.xCoord - 1 == playerCoords[0] && monster.yCoord == playerCoords[1] || monster.xCoord + 1 == playerCoords[0] && monster.yCoord == playerCoords[1] || monster.yCoord - 1 == playerCoords[1] && monster.xCoord == playerCoords[0] || monster.yCoord + 1 == playerCoords[1] && monster.xCoord == playerCoords[0])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static int monsterNextToPlayer()
+        {
+            for (int i = 0; i <= World.MonsterList.Count; i++)
+            {
+                if (World.MonsterList[i].room == World.currentRoom)
+                {
+                    if (World.MonsterList[i].xCoord - 1 == playerCoords[0] && World.MonsterList[i].yCoord == playerCoords[1] || World.MonsterList[i].xCoord + 1 == playerCoords[0] && World.MonsterList[i].yCoord == playerCoords[1] || World.MonsterList[i].yCoord - 1 == playerCoords[1] && World.MonsterList[i].xCoord == playerCoords[0] || World.MonsterList[i].yCoord + 1 == playerCoords[1] && World.MonsterList[i].xCoord == playerCoords[0])
+                    {
+                        return i;
+                        break;
+                    }
+                }
+            }
+            return 99;
         }
 
     }
