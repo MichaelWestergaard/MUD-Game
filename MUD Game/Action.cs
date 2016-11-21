@@ -47,7 +47,7 @@ namespace MUD_Game
                 //Mine
 
                 //25% for a bad outcome and 75% for a good outcome.
-                int outcome = rand.Next(1,4);
+                int outcome = rand.Next(1,5);
 
                 if(outcome > 1)
                 {
@@ -71,8 +71,8 @@ namespace MUD_Game
                     }
                     else
                     {
-                        //Else add an new item to the inventory
-                        Player.Inventory.Add(new Item("Ore", amount, 0, 0));
+                        //Else add a new item to the inventory
+                        Player.Inventory.Add(new Item("Ore", amount, 0, 0, 0, 1, true));
                     }
 
                 } else
@@ -95,6 +95,7 @@ namespace MUD_Game
                                 else
                                 {
                                     item.decreaseQuantity(lostOre);
+                                    break;
                                 }
                                 break;
                             }
@@ -122,23 +123,252 @@ namespace MUD_Game
                 Program.message = "You need a pickaxe in order to mine here!\n";
             }
         }
-
-        public static void sellItems()
+        
+        public static void dig()
         {
+            if (Player.hasItem("Shovel") && Player.itemDurability("Shovel"))
+            {
+                //25% for a bad outcome and 75% for a good outcome.
+                int outcome = rand.Next(1, 5);
 
+                if (outcome > 1)
+                {
+                    //Good outcome
+                    int amount = rand.Next(1, 6);
+
+                    Program.message += "You digged out " + amount + " sand and lost 1 durability on your shovel!\n";
+
+                    //Add the digged out sand to the inventory of the player
+                    //First check if the player already have some sand
+                    if (Player.hasItem("Sand"))
+                    {
+                        //If he have the item, then add the sand to the rest of the sand in the inventory
+                        foreach (var item in Player.Inventory)
+                        {
+                            if (item.name.Equals("Sand"))
+                            {
+                                item.increaseQuantity(amount);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //Else add a new item to the inventory
+                        Player.Inventory.Add(new Item("Sand", amount, 0, 0, 0, 1, true));
+                    }
+
+                }
+                else
+                {
+                    //Bad outcome / loses sand
+                    int lostSand = rand.Next(1, 5);
+
+                    if (Player.hasItem("Sand"))
+                    {
+                        //If the player have sand in the inventory, then take some from him
+                        foreach (var item in Player.Inventory)
+                        {
+                            if (item.name.Equals("Sand"))
+                            {
+                                if (item.quantity <= lostSand)
+                                {
+                                    //Remove sand from inventory, because all the sand was taken
+                                    item.removeItem();
+                                }
+                                else
+                                {
+                                    item.decreaseQuantity(lostSand);
+                                    break;
+                                }
+                                break;
+                            }
+                        }
+                        Program.message += "You was robbed while you was digging! You lost " + lostSand + " sand!\n";
+                    }
+                    else
+                    {
+                        Program.message += "You did not find any sand this time..\n";
+                    }
+
+                }
+
+                for (int i = 0; i < Player.Inventory.Count; i++)
+                {
+                    if (Player.Inventory[i].name.Equals("Shovel"))
+                    {
+                        Player.Inventory[i].reduceDurability();
+                        break;
+                    }
+                }
+
+            }
+            else
+            {
+                Program.message = "You need a shovel in order to dig here!\n";
+            }
         }
 
-        public static void buyItems()
+        public static void cut()
         {
-            //Åben ny gamestate i program
-            //Vis ting der kan købes med 1-9 i siden
-            //Når der trykkes 1 købes ting 1
+            if (Player.hasItem("Axe") && Player.itemDurability("Axe"))
+            {
+                //25% for a bad outcome and 75% for a good outcome.
+                int outcome = rand.Next(1, 5);
+
+                if (outcome > 1)
+                {
+                    //Good outcome
+                    int amount = rand.Next(1, 6);
+
+                    Program.message += "You cut " + amount + " wood and lost 1 durability on your axe!\n";
+
+                    //Add the cutted out wood to the inventory of the player
+                    //First check if the player already have some wood
+                    if (Player.hasItem("Wood"))
+                    {
+                        //If he have the item, then add the cutted wood to the rest of the wood in the inventory
+                        foreach (var item in Player.Inventory)
+                        {
+                            if (item.name.Equals("Wood"))
+                            {
+                                item.increaseQuantity(amount);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //Else add a new item to the inventory
+                        Player.Inventory.Add(new Item("Wood", amount, 0, 0, 0, 1, true));
+                    }
+
+                }
+                else
+                {
+                    //Bad outcome / loses wood
+                    int lostWood = rand.Next(1, 5);
+
+                    if (Player.hasItem("Wood"))
+                    {
+                        //If the player have wood in the inventory, then take some from him
+                        foreach (var item in Player.Inventory)
+                        {
+                            if (item.name.Equals("Wood"))
+                            {
+                                if (item.quantity <= lostWood)
+                                {
+                                    //Remove wood from inventory, because all the wood was taken
+                                    item.removeItem();
+                                }
+                                else
+                                {
+                                    item.decreaseQuantity(lostWood);
+                                    break;
+                                }
+                                break;
+                            }
+                        }
+                        Program.message += "You was robbed while you was cutting the tree! You lost " + lostWood + " wood!\n";
+                    }
+                    else
+                    {
+                        Program.message += "You did not get any wood this time..\n";
+                    }
+
+                }
+
+                for (int i = 0; i < Player.Inventory.Count; i++)
+                {
+                    if (Player.Inventory[i].name.Equals("Axe"))
+                    {
+                        Player.Inventory[i].reduceDurability();
+                        break;
+                    }
+                }
+
+            }
+            else
+            {
+                Program.message = "You need a axe in order to cut trees here!\n";
+            }
+        }
+        
+        public static void heal()
+        {
+            if (Player.hasItem("Health Potion"))
+            {
+                //Find the health potion in the inventory
+                foreach (var item in Player.Inventory)
+                {
+                    if (item.name.Equals("Health Potion"))
+                    {
+                        if (item.quantity <= 1)
+                        {
+                            //Remove the item, because there is no potions left
+                            item.removeItem();
+                        }
+                        else
+                        {
+                            item.decreaseQuantity(1);
+                        }
+                        break;
+                    }
+                }
+                
+                if(Player.currentHP + 25 > Player.maxHP)
+                {
+                    Player.currentHP = Player.maxHP;
+                }
+                else
+                {
+                    Player.currentHP += 25;
+                }
+                 
+                Program.message += "You used a Health Potion and restored 25 HP!\n";
+            }
+            else
+            {
+                Program.message += "You do not have any Health Potions!\n";
+            }
         }
 
-        public static void interact()
+        public static void stealMoney()
         {
-            Program.message += "Nothing to do here..\n";
-        }
+            int outcome;
 
+            if (Player.hasItem("Sword"))
+            {
+                outcome = rand.Next(1, 5);
+
+                for (int i = 0; i < Player.Inventory.Count; i++)
+                {
+                    if (Player.Inventory[i].name.Equals("Sword"))
+                    {
+                        Player.Inventory[i].reduceDurability();
+                        break;
+                    }
+                }
+
+            } else
+            {
+                outcome = rand.Next(1, 3);
+            }
+
+            if(outcome == 1)
+            {
+                //Pickpocket failed
+                int damageTaken = rand.Next(5, 10);
+                Player.currentHP -= damageTaken;
+
+                Program.actionResponse += "You failed to steal money and lost " + damageTaken + " HP";
+
+            }
+            else
+            {
+                int money = rand.Next(1, 5);
+                Player.cash += money;
+
+                Program.actionResponse += "You stole $" + money + "!";
+            }
+        }
     }
 }

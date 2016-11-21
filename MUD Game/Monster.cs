@@ -6,28 +6,31 @@ using System.Threading.Tasks;
 
 namespace MUD_Game
 {
-    class NPC
+    class Monster
     {
-
+        public Random rand = new Random();
         public string name { get; set; }
-        public string icon { get; set; }
         public string room { get; set; }
+        public int health { get; set; }
+        public int maxDamage { get; set; }
         public int xCoord { get; set; }
         public int yCoord { get; set; }
 
-        public NPC(string name, string icon, string room, int xCoord, int yCoord)
+        public Monster(string name, string room, int health, int maxDamage, int xCoord, int yCoord)
         {
             this.name = name;
-            this.icon = icon;
             this.room = room;
+            this.health = health;
+            this.maxDamage = maxDamage;
             this.xCoord = xCoord;
             this.yCoord = yCoord;
         }
-
+        
         public void remove()
         {
-            World.NPCList.Remove(this);
+            World.MonsterList.Remove(this);
         }
 
+        
     }
 }
