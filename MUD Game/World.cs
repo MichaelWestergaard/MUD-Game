@@ -24,6 +24,12 @@ namespace MUD_Game
         public static void createMap()
         {
             Console.Clear();
+
+            //Code for generating/showing map in console. 
+            //Double for loop, where we get a x and y index
+            //i = y-coord
+            //n = x-coord
+
             for (int i = 0; i < currentMap.Length; i++)
             {
                 for (int n = 0; n < currentMap[i].Length; n++)
@@ -36,16 +42,19 @@ namespace MUD_Game
 
         public static void placePlayer(int[] playerCoords)
         {
+            //Replace the element at currentMap[y][x] with x, which is the icon for the player.
             currentMap[playerCoords[1]][playerCoords[0]] = "x";
         }
 
         public static void removePlayer(int[] playerCoords)
         {
+            //Replace the element at currentMap[y][x] with " ", when we need to remove the player.
             currentMap[playerCoords[1]][playerCoords[0]] = " ";
         }
 
         public static void moveMonsters(string currentRoom)
         {
+            //Move all monsters in current room
             for (int i = 0; i < World.MonsterList.Count; i++)
             {
                 if (World.MonsterList[i].room.Equals(currentRoom))
@@ -65,6 +74,9 @@ namespace MUD_Game
 
             switch (direction)
             {
+                //Check if cell is empty
+                //If cell is empty, then remove the player, then change the coordinates for the monster and place the monster on the new coords.
+                //
                 case 0:
                     if (currentMap[monster.yCoord][monster.yCoord - 1] == " ")
                     {
@@ -126,6 +138,8 @@ namespace MUD_Game
                     {
                         return true;
                     }
+
+                    //Checks if cell is a door.
                     else if (cell == "_")
                     {
                         changeRoom(direction);
@@ -152,6 +166,8 @@ namespace MUD_Game
                     {
                         return true;
                     }
+
+                    //Checks if cell is a door.
                     else if (cell == "|")
                     {
                         changeRoom(direction);
@@ -352,10 +368,10 @@ namespace MUD_Game
             }
             else if (currentRoom == "hostileAreaUpLvl1")
             {
-                string[] r1 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
+                string[] r1 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
                 string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
-                string[] r4 = { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r4 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r5 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r6 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r7 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
@@ -368,23 +384,23 @@ namespace MUD_Game
                 string[] r1 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
                 string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
-                string[] r4 = { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r4 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r5 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r6 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
-                string[] r7 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
+                string[] r7 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
 
                 currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
 
             }
             else if (currentRoom == "hostileAreaLeftLvl1")
             {
-                string[] r1 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
+                string[] r1 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
                 string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
-                string[] r4 = { "|", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" };
+                string[] r4 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" };
                 string[] r5 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
                 string[] r6 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
-                string[] r7 = { "#", "#", "#", "#", "#", "_", "#", "#", "#", "#", "#" };
+                string[] r7 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
 
                 currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
 

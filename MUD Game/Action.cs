@@ -288,7 +288,7 @@ namespace MUD_Game
             }
             else
             {
-                Program.message = "You need a axe in order to cut trees here!\n";
+                Program.message = "You need an axe in order to cut trees here!\n";
             }
         }
         
@@ -355,7 +355,7 @@ namespace MUD_Game
 
             if(outcome == 1)
             {
-                //Pickpocket failed
+                //Action failed
                 int damageTaken = rand.Next(5, 10);
                 Player.currentHP -= damageTaken;
 
@@ -378,8 +378,6 @@ namespace MUD_Game
             {
                 //More dmg
                 playerDamage = rand.Next(3, 11);
-
-                //Reduce durability from sword
             }
             else 
             {

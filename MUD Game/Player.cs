@@ -62,11 +62,7 @@ namespace MUD_Game
             }
             
             switch (key)
-            {
-                case 'c':
-                    cash += 50;
-                    break;
-                    
+            {                    
                 case 'h':
                     Action.heal();
                     break;
@@ -76,6 +72,7 @@ namespace MUD_Game
                     break;
 
                 case ' ':
+                    //Different actions in different rooms
                     if(World.currentRoom == "mine")
                     {
                         Action.mine();
@@ -136,6 +133,7 @@ namespace MUD_Game
 
         public static bool hasItem(string itemName)
         {
+            //Check if itemName is in inventory
             foreach (var item in Inventory)
             {
                 if (item.name.Equals(itemName))
@@ -148,6 +146,7 @@ namespace MUD_Game
 
         public static bool itemDurability(string itemName)
         {
+            //Check if item have durability
             foreach (var item in Inventory)
             {
                 if (item.name.Equals(itemName))
@@ -163,7 +162,7 @@ namespace MUD_Game
         
         public static bool nextToNPC(string NPC)
         {
-            
+            //Check if player is next to a specific NPC
             foreach (var npc in World.NPCList)
             {
                 if (npc.name == NPC)
@@ -180,6 +179,7 @@ namespace MUD_Game
 
         public static bool nextToAnyNPC()
         {
+            //Check if player is next to any NPC
             foreach (var npc in World.NPCList)
             {
                 if (npc.room == World.currentRoom)
@@ -195,6 +195,7 @@ namespace MUD_Game
 
         public static bool nextToMonster()
         {
+            //Check if player is next to a monster
             foreach (var monster in World.MonsterList)
             {
                 if (monster.room == World.currentRoom)
@@ -210,6 +211,7 @@ namespace MUD_Game
 
         public static int monsterNextToPlayer()
         {
+            //Get the monster that is next to the player
             for (int i = 0; i <= World.MonsterList.Count; i++)
             {
                 if (World.MonsterList[i].room == World.currentRoom)
