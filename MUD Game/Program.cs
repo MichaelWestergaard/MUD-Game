@@ -138,15 +138,34 @@ namespace MUD_Game
             }
             else if (action == "fight")
             {
+                if (Player.nextToMonster())
+                {
 
+                    int monsterIndex = Player.monsterNextToPlayer();
+                    var monster = World.MonsterList[monsterIndex];
+
+                    actionMessage = "[1] Attack\n[q] Run away\n\n Monster Name: " + monster.name + " Monster HP:" + monster.health + "\n";
+                    
+                    Console.WriteLine(actionMessage);
+                    Console.WriteLine(actionResponse);
+                    actionResponse = "";
+
+                    actions(Console.ReadKey().KeyChar, action);
+                }
+                else
+                {
+                    Console.Clear();
+                    gameState = gameStates.running;
+                    World.getCurrentMapLayout(World.currentRoom);
+                    World.createMap();
+                }
             }
             else if (action == "interact")
             {
                 if (Player.nextToNPC("Pleb"))
                 {
                     actionMessage = "[1] Talk\n[2] Steal Money\n[3] Attack";
-
-
+                    
                     Console.WriteLine(actionMessage);
                     Console.WriteLine(actionResponse);
                     actionResponse = "";
@@ -206,6 +225,10 @@ namespace MUD_Game
                         {
                             Player.cash += cashToAdd;
                         }
+                    }
+                    else if (action == "fight")
+                    {
+                        Action.attack();
                     }
                     else if (action == "interact")
                     {

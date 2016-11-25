@@ -370,5 +370,51 @@ namespace MUD_Game
                 Program.actionResponse += "You stole $" + money + "!";
             }
         }
+
+        public static void attack()
+        {
+            int playerDamage;
+            if (Player.hasItem("Sword"))
+            {
+                //More dmg
+                playerDamage = rand.Next(3, 11);
+
+                //Reduce durability from sword
+            }
+            else 
+            {
+                playerDamage = rand.Next(1, 6);
+            }
+
+            int monsterIndex = Player.monsterNextToPlayer();
+            var monster = World.MonsterList[monsterIndex];
+            
+            int monsterDamage = rand.Next(1, monster.maxDamage);
+
+            if(playerDamage >= monster.health)
+            {
+                //Monster was killed
+                monster.remove();
+
+                //Amount of gold for killing the monster
+                int goldReward = rand.Next(5, 16);
+
+                Player.cash += goldReward;
+                
+                Program.message += "You killed the " + monster.name + " and got $" + goldReward + " as a reward!\n";
+            }
+            else
+            {
+                monster.health -= playerDamage;
+
+                Program.actionResponse += "You did " + playerDamage + " damage to the " + monster.name + "!\n";
+            }
+
+            Player.currentHP -= monsterDamage;
+
+            Program.actionResponse += "You lost " + monsterDamage + " HP!\n";
+
+        }
+
     }
 }
