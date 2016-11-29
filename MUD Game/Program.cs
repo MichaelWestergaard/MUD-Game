@@ -76,8 +76,10 @@ namespace MUD_Game
 
         static void running()
         {
+            
             if (state == 1)
             {
+                World.placePlayer(Player.playerCoords);
                 Console.WriteLine("Player Coord: " + Player.playerCoords[0] + "," + Player.playerCoords[1]);
                 //Console.WriteLine("Map Coord: " + World.mapCoord[0] + "," + World.mapCoord[1]);
                 Console.WriteLine("Room: " + World.currentRoom);
@@ -130,7 +132,7 @@ namespace MUD_Game
             {
                 Console.WriteLine("Sell your item(s):");
                 actionMessage = "";
-                for (int i = 0; i < Player.Inventory.Count && i <= 9; i++)
+                for (int i = 0; i < Player.Inventory.Count && i <= 8; i++)
                 {
                     int n = i + 1;
                     actionMessage += "[" + n + "] - " + Player.Inventory[i].name + " (" + Player.Inventory[i].quantity + "): $" + Player.Inventory[i].quantity * Player.Inventory[i].sellPrice + "\n";
@@ -199,11 +201,11 @@ namespace MUD_Game
             switch (key)
             {
                 case '1':
-                    if(action == "buyItems")
+                    if (action == "buyItems")
                     {
                         int n = 0;
                         //If player have enough cash to buy, then buy the item
-                        if(Player.cash >= itemsInShop[n].buyPrice)
+                        if (Player.cash >= itemsInShop[n].buyPrice)
                         {
                             Player.cash -= itemsInShop[n].buyPrice;
                             if (Player.hasItem(itemsInShop[n].name) && itemsInShop[n].stackable == true)
@@ -226,12 +228,15 @@ namespace MUD_Game
                     }
                     else if (action == "sellItems")
                     {
-                        //Sell ALL items - (need to add sell x items)
-                        int cashToAdd = Player.Inventory[0].sellPrice * Player.Inventory[0].quantity;
-                        
-                        if (Player.Inventory[0].sellItem())
+                        if (Player.Inventory.Count() > 0)
                         {
-                            Player.cash += cashToAdd;
+                            //Sell ALL items - (need to add sell x items)
+                            int cashToAdd = Player.Inventory[0].sellPrice * Player.Inventory[0].quantity;
+
+                            if (Player.Inventory[0].sellItem())
+                            {
+                                Player.cash += cashToAdd;
+                            }
                         }
                     }
                     else if (action == "fight")
@@ -279,11 +284,14 @@ namespace MUD_Game
                     }
                     else if (action == "sellItems")
                     {
-                        int cashToAdd = Player.Inventory[1].sellPrice * Player.Inventory[1].quantity;
-
-                        if (Player.Inventory[1].sellItem())
+                        if (Player.Inventory.Count() > 1)
                         {
-                            Player.cash = Player.cash + cashToAdd;
+                            int cashToAdd = Player.Inventory[1].sellPrice * Player.Inventory[1].quantity;
+
+                            if (Player.Inventory[1].sellItem())
+                            {
+                                Player.cash = Player.cash + cashToAdd;
+                            }
                         }
                     }
                     else if (action == "interact")
@@ -321,11 +329,14 @@ namespace MUD_Game
                     }
                     else if (action == "sellItems")
                     {
-                        int cashToAdd = Player.Inventory[2].sellPrice * Player.Inventory[2].quantity;
-
-                        if (Player.Inventory[2].sellItem())
+                        if (Player.Inventory.Count() > 2)
                         {
-                            Player.cash += cashToAdd;
+                            int cashToAdd = Player.Inventory[2].sellPrice * Player.Inventory[2].quantity;
+
+                            if (Player.Inventory[2].sellItem())
+                            {
+                                Player.cash += cashToAdd;
+                            }
                         }
                     }
                     else if (action == "interact")
@@ -389,11 +400,14 @@ namespace MUD_Game
                     }
                     else if (action == "sellItems")
                     {
-                        int cashToAdd = Player.Inventory[3].sellPrice * Player.Inventory[3].quantity;
-
-                        if (Player.Inventory[3].sellItem())
+                        if (Player.Inventory.Count() > 3)
                         {
-                            Player.cash += cashToAdd;
+                            int cashToAdd = Player.Inventory[3].sellPrice * Player.Inventory[3].quantity;
+
+                            if (Player.Inventory[3].sellItem())
+                            {
+                                Player.cash += cashToAdd;
+                            }
                         }
                     }
                     break;
@@ -426,11 +440,14 @@ namespace MUD_Game
                     }
                     else if (action == "sellItems")
                     {
-                        int cashToAdd = Player.Inventory[4].sellPrice * Player.Inventory[4].quantity;
-
-                        if (Player.Inventory[4].sellItem())
+                        if (Player.Inventory.Count() > 4)
                         {
-                            Player.cash += cashToAdd;
+                            int cashToAdd = Player.Inventory[4].sellPrice * Player.Inventory[4].quantity;
+
+                            if (Player.Inventory[4].sellItem())
+                            {
+                                Player.cash += cashToAdd;
+                            }
                         }
                     }
                     break;
@@ -463,11 +480,14 @@ namespace MUD_Game
                     }
                     else if (action == "sellItems")
                     {
-                        int cashToAdd = Player.Inventory[5].sellPrice * Player.Inventory[5].quantity;
-
-                        if (Player.Inventory[5].sellItem())
+                        if (Player.Inventory.Count() > 5)
                         {
-                            Player.cash += cashToAdd;
+                            int cashToAdd = Player.Inventory[5].sellPrice * Player.Inventory[5].quantity;
+
+                            if (Player.Inventory[5].sellItem())
+                            {
+                                Player.cash += cashToAdd;
+                            }
                         }
                     }
                     break;
@@ -500,11 +520,15 @@ namespace MUD_Game
                     }
                     else if (action == "sellItems")
                     {
-                        int cashToAdd = Player.Inventory[6].sellPrice * Player.Inventory[6].quantity;
 
-                        if (Player.Inventory[6].sellItem())
+                        if (Player.Inventory.Count() > 6)
                         {
-                            Player.cash += cashToAdd;
+                            int cashToAdd = Player.Inventory[6].sellPrice * Player.Inventory[6].quantity;
+
+                            if (Player.Inventory[6].sellItem())
+                            {
+                                Player.cash += cashToAdd;
+                            }
                         }
                     }
                     break;
@@ -537,11 +561,14 @@ namespace MUD_Game
                     }
                     else if (action == "sellItems")
                     {
-                        int cashToAdd = Player.Inventory[7].sellPrice * Player.Inventory[7].quantity;
-
-                        if (Player.Inventory[7].sellItem())
+                        if (Player.Inventory.Count() > 7)
                         {
-                            Player.cash += cashToAdd;
+                            int cashToAdd = Player.Inventory[7].sellPrice * Player.Inventory[7].quantity;
+
+                            if (Player.Inventory[7].sellItem())
+                            {
+                                Player.cash += cashToAdd;
+                            }
                         }
                     }
                     break;
@@ -574,11 +601,14 @@ namespace MUD_Game
                     }
                     else if (action == "sellItems")
                     {
-                        int cashToAdd = Player.Inventory[8].sellPrice * Player.Inventory[8].quantity;
-
-                        if (Player.Inventory[8].sellItem())
+                        if (Player.Inventory.Count() > 8)
                         {
-                            Player.cash += cashToAdd;
+                            int cashToAdd = Player.Inventory[8].sellPrice * Player.Inventory[8].quantity;
+
+                            if (Player.Inventory[8].sellItem())
+                            {
+                                Player.cash += cashToAdd;
+                            }
                         }
                     }
                     break;
@@ -587,6 +617,7 @@ namespace MUD_Game
                     Console.Clear();
                     gameState = gameStates.running;
                     World.getCurrentMapLayout(World.currentRoom);
+                    World.placePlayer(Player.playerCoords);
                     World.createMap();
                     break;
 
