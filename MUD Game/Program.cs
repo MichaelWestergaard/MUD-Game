@@ -117,8 +117,12 @@ namespace MUD_Game
                     int n = i + 1;
                     actionMessage += "[" + n + "] - " + itemsInShop[i].name + ": $" + itemsInShop[i].buyPrice + "\n";
                 }
-
+                
                 Console.WriteLine(actionMessage);
+
+                actionList = "[q] Quit";
+                Console.SetCursorPosition(0, 23);
+                Console.WriteLine(actionList);
 
                 actions(Console.ReadKey().KeyChar, action);
             }
@@ -134,6 +138,10 @@ namespace MUD_Game
 
                 Console.WriteLine(actionMessage);
                 
+                actionList = "[q] Quit";
+                Console.SetCursorPosition(0, 23);
+                Console.WriteLine(actionList);
+
                 actions(Console.ReadKey().KeyChar, action);
             }
             else if (action == "fight")
