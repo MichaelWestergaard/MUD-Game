@@ -53,6 +53,8 @@ namespace MUD_Game
 
         static void start()
         {
+            title = "Player Creation";
+            Console.Title = title;
             message = "Hello! What is your name?";
             Console.WriteLine(message);
             Player.name = Console.ReadLine();
@@ -78,7 +80,7 @@ namespace MUD_Game
                 Console.WriteLine("Room: " + World.currentRoom);
                 Console.WriteLine(message);
                 message = "";
-                actionList = "[i]  Inventory  |  [e]  Interact  |  [h]  Heal  |  ";
+                actionList = "[i]  Inventory  |  [space]  Interact  |  [h]  Heal  |  ";
                 Console.SetCursorPosition(0,23);
                 Action.action();
                 Console.WriteLine(actionList);
