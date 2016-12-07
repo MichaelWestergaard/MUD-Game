@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MUD_Game
 {
@@ -11,8 +13,7 @@ namespace MUD_Game
 
         public enum gameStates { start, running, action, gameOver }
         public static gameStates gameState = gameStates.start;
-
-        private static bool alive = true;
+        
         private static int state = 0;
         public static string message;
         public static string actionList;
@@ -27,11 +28,6 @@ namespace MUD_Game
         {
             while(Player.currentHP > 0)
             {
-                if (Player.currentHP <= 0)
-                {
-                    gameState = gameStates.gameOver;
-                }
-
                 switch (gameState)
                 {
                     case gameStates.start:
@@ -45,10 +41,6 @@ namespace MUD_Game
                     case gameStates.action:
                         actionScene(action);
                         break;
-
-                    case gameStates.gameOver:
-                        gameOver();
-                        break;
                 }
                 if (gameState != gameStates.start)
                 {
@@ -56,6 +48,7 @@ namespace MUD_Game
                     Console.Title = title;
                 }
             }
+            gameOver();
         }
 
         static void start()
@@ -101,8 +94,14 @@ namespace MUD_Game
 
         static void gameOver()
         {
-            message = "Game Over!";
+            Console.Clear();
+            gameState = gameStates.running;
+            Player.score += (Player.cash / 4) + (Player.actionCount / 2);
+            
+            message = "Game Over!\nYour score: " + Player.score;
             Console.WriteLine(message);
+            
+            Console.WriteLine("Press any button to quit the game.");
             Console.ReadLine();
         }
 
@@ -623,6 +622,6 @@ namespace MUD_Game
 
             }
         }
-        
+
     }
 }

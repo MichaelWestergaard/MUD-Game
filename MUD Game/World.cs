@@ -84,12 +84,22 @@ namespace MUD_Game
                         monster.xCoord--;
                         placeMonster(monster.xCoord, monster.yCoord);
                     }
+                    else
+                    {
+                        removeMonster(monster.xCoord, monster.yCoord);
+                        placeMonster(monster.xCoord, monster.yCoord);
+                    }
                     break;
                 case 1:
                     if (currentMap[monster.yCoord + 1][monster.xCoord] == " ")
                     {
                         removeMonster(monster.xCoord, monster.yCoord);
                         monster.yCoord++;
+                        placeMonster(monster.xCoord, monster.yCoord);
+                    }
+                    else
+                    {
+                        removeMonster(monster.xCoord, monster.yCoord);
                         placeMonster(monster.xCoord, monster.yCoord);
                     }
                     break;
@@ -100,12 +110,22 @@ namespace MUD_Game
                         monster.xCoord++;
                         placeMonster(monster.xCoord, monster.yCoord);
                     }
+                    else
+                    {
+                        removeMonster(monster.xCoord, monster.yCoord);
+                        placeMonster(monster.xCoord, monster.yCoord);
+                    }
                     break;
                 case 3:
                     if (currentMap[monster.yCoord - 1][monster.xCoord] == " ")
                     {
                         removeMonster(monster.xCoord, monster.yCoord);
                         monster.yCoord--;
+                        placeMonster(monster.xCoord, monster.yCoord);
+                    }
+                    else
+                    {
+                        removeMonster(monster.xCoord, monster.yCoord);
                         placeMonster(monster.xCoord, monster.yCoord);
                     }
                     break;
@@ -245,6 +265,46 @@ namespace MUD_Game
                     }
                 }
             }
+        }
+
+        public static void generateRandomRoom()
+        {
+            
+            for (int y = 0; y < 11; y++)
+            {
+                for (int x = 0; x < 11; x++)
+                {
+                    obj = generateRandomObject();
+                    //randomMap[y][x] = obj;
+                }
+            }
+        }
+
+        public static string obj;
+
+        public static string generateRandomObject()
+        {
+            int n = rand.Next(0, 5);
+            
+            switch (n)
+            {
+                case 1:
+                    obj = " ";
+                    break;
+
+                case 2:
+                    obj = " ";
+                    break;
+
+                case 3:
+                    obj = " ";
+                    break;
+
+                case 4:
+                    obj = "#";
+                    break;
+            }
+            return obj;
         }
 
         //Maps
@@ -393,6 +453,19 @@ namespace MUD_Game
 
             }
             else if (currentRoom == "hostileAreaLeftLvl1")
+            {
+                string[] r1 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
+                string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r3 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r4 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "|" };
+                string[] r5 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r6 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };
+                string[] r7 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
+
+                currentMap = new string[][] { r1, r2, r3, r4, r5, r6, r7 };
+
+            }
+            else if (currentRoom == "randomMapLeft")
             {
                 string[] r1 = { "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#" };
                 string[] r2 = { "#", " ", " ", " ", " ", " ", " ", " ", " ", " ", "#" };

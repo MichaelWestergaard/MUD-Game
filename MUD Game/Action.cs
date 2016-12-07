@@ -42,6 +42,7 @@ namespace MUD_Game
 
         public static void mine()
         {
+            Player.actionCount++;
             if (Player.hasItem("Pickaxe") && Player.itemDurability("Pickaxe"))
             {
                 //Mine
@@ -126,6 +127,7 @@ namespace MUD_Game
         
         public static void dig()
         {
+            Player.actionCount++;
             if (Player.hasItem("Shovel") && Player.itemDurability("Shovel"))
             {
                 //25% for a bad outcome and 75% for a good outcome.
@@ -210,6 +212,7 @@ namespace MUD_Game
 
         public static void cut()
         {
+            Player.actionCount++;
             if (Player.hasItem("Axe") && Player.itemDurability("Axe"))
             {
                 //25% for a bad outcome and 75% for a good outcome.
@@ -333,6 +336,7 @@ namespace MUD_Game
 
         public static void stealMoney()
         {
+            Player.actionCount++;
             int outcome;
 
             if (Player.hasItem("Sword"))
@@ -373,6 +377,7 @@ namespace MUD_Game
 
         public static void attack()
         {
+            Player.actionCount++;
             int playerDamage;
             if (Player.hasItem("Sword"))
             {

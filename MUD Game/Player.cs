@@ -15,6 +15,7 @@ namespace MUD_Game
         public static int maxHP = 100;
         public static int currentHP = 100;
         public static int cash = 0;
+        public static int actionCount = 0;
         public static int score = 0;
 
         public static int[] playerCoords = new int[2] { 4, 4 };
@@ -219,7 +220,6 @@ namespace MUD_Game
                     if (World.MonsterList[i].xCoord - 1 == playerCoords[0] && World.MonsterList[i].yCoord == playerCoords[1] || World.MonsterList[i].xCoord + 1 == playerCoords[0] && World.MonsterList[i].yCoord == playerCoords[1] || World.MonsterList[i].yCoord - 1 == playerCoords[1] && World.MonsterList[i].xCoord == playerCoords[0] || World.MonsterList[i].yCoord + 1 == playerCoords[1] && World.MonsterList[i].xCoord == playerCoords[0])
                     {
                         return i;
-                        break;
                     }
                 }
             }
