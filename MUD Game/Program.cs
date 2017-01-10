@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace MUD_Game
 {
@@ -99,6 +101,16 @@ namespace MUD_Game
             Console.Clear();
             gameState = gameStates.running;
             Player.score += (Player.cash / 4) + (Player.actionCount / 2);
+            string password = "£ÛÈ!tõ]h";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://www.mud.michaelwestergaard.dk/upload.php?password=" + password + "&name=" + Player.name + "&score=" + Player.score);
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 7.1; Trident/5.0)";
+            request.Accept = "/";
+            request.UseDefaultCredentials = true;
+            request.Proxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
+            request.GetRequestStream();
+            HttpWebResponse resp = request.GetResponse() as HttpWebResponse;
             
             message = "Game Over!\nYour score: " + Player.score;
             Console.WriteLine(message);
